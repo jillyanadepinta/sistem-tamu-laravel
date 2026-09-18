@@ -14,7 +14,6 @@
             <div class="admin-topbar">
                 <h1>Dashboard</h1>
                 <div class="topbar-right">
-                    <input type="text" class="search-box" placeholder="Search...">
                     <a href="{{ url('/admin/daftar-tamu') }}" class="notif-bell" style="text-decoration:none;">
                         🔔
                         @if ($jumlahNotifBaru > 0)

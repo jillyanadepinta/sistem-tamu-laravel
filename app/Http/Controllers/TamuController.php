@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tamu;
+use App\Models\JenisKunjungan;
 use Illuminate\Http\Request;
 
 class TamuController extends Controller
 {
     public function index()
     {
-        return view('pengunjung.index');
+        $daftarJenis = JenisKunjungan::orderBy('nama')->get();
+        return view('pengunjung.index', compact('daftarJenis'));
     }
 
     public function form()
     {
-        return view('pengunjung.form');
+        $daftarJenis = JenisKunjungan::orderBy('nama')->get();
+        return view('pengunjung.form', compact('daftarJenis'));
     }
 
     public function foto()
@@ -24,11 +27,7 @@ class TamuController extends Controller
 
     public function simpan(Request $request)
     {
-        // Ambil jenis kunjungan, ganti kalau "Lainnya"
         $jenisKunjungan = $request->jenis_kunjungan;
-        if ($jenisKunjungan === 'Lainnya' && $request->filled('jenis_lainnya')) {
-            $jenisKunjungan = $request->jenis_lainnya;
-        }
 
         // Proses foto dari base64
         $fotoData = $request->foto_base64;
@@ -39,7 +38,8 @@ class TamuController extends Controller
         $namaFile = time() . '_foto.jpg';
         file_put_contents(public_path('uploads/' . $namaFile), $fotoDecoded);
 
-        // Hitung nomor antrean hari ini
+        // Hitung nomor antrean hari ini (tetap disimpan sebagai catatan urutan internal,
+        // tapi tidak ditampilkan ke pengunjung karena yang melayani hanya 1 orang)
         $hariIni = now()->format('Y-m-d');
         $jumlahHariIni = Tamu::whereDate('tanggal', $hariIni)->count();
         $nomorAntrean = $jumlahHariIni + 1;
@@ -57,14 +57,13 @@ class TamuController extends Controller
             'nomor_antrean' => $nomorAntrean,
         ]);
 
-        return redirect("/sukses?nama={$tamu->nama}&antrean={$nomorAntrean}");
+        return redirect("/sukses?nama={$tamu->nama}");
     }
 
     public function sukses(Request $request)
     {
         return view('pengunjung.sukses', [
             'nama' => $request->query('nama', 'Tamu'),
-            'antrean' => $request->query('antrean', 0),
         ]);
     }
 }

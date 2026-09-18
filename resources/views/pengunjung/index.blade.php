@@ -10,6 +10,7 @@
         <div class="topbar-home">
             <strong>📖 BUKU TAMU DIGITAL</strong>
             <div style="display:flex; align-items:center; gap:12px;">
+                <a href="{{ url('/') }}" style="font-size:13px; color:#378ADD; text-decoration:none; font-weight:600;">&larr; Beranda</a>
                 <span id="jamSekarang" style="font-size:13px; color:#666;"></span>
                 <span class="badge-online">● Online</span>
             </div>
@@ -24,31 +25,25 @@
         <p class="grid-title">Pilih Jenis Kunjungan</p>
 
         <div class="grid-kategori">
-            <button class="kartu-kategori warna-biru" onclick="pilihKategori('Magang')">
-                <div class="icon-lingkaran">📖</div>
-                <div class="label">Magang</div>
-                <div class="sub-label">Praktik Kerja Lapangan</div>
-            </button>
-            <button class="kartu-kategori warna-hijau" onclick="pilihKategori('Donasi Buku')">
-                <div class="icon-lingkaran">📚</div>
-                <div class="label">Donasi Buku</div>
-                <div class="sub-label">Sumbangan koleksi buku</div>
-            </button>
-            <button class="kartu-kategori warna-ungu" onclick="pilihKategori('Tamu Dinas')">
-                <div class="icon-lingkaran">🏢</div>
-                <div class="label">Tamu Dinas</div>
-                <div class="sub-label">Kunjungan resmi instansi</div>
-            </button>
-            <button class="kartu-kategori warna-oranye" onclick="pilihKategori('Kerja Sama')">
-                <div class="icon-lingkaran">🤝</div>
-                <div class="label">Kerja Sama</div>
-                <div class="sub-label">Kemitraan &amp; kolaborasi</div>
-            </button>
-            <button class="kartu-kategori warna-abu" onclick="pilihKategori('Lainnya')">
-                <div class="icon-lingkaran">📌</div>
-                <div class="label">Keperluan Lainnya</div>
-                <div class="sub-label">Selain kategori di atas</div>
-            </button>
+            @php
+                $ikonKategori = [
+                    'Kunjungan Berkelompok' => ['icon' => '👥', 'warna' => 'warna-biru', 'sub' => 'Kunjungan rombongan/instansi'],
+                    'Penelitian/Observasi' => ['icon' => '🔬', 'warna' => 'warna-hijau', 'sub' => 'Riset dan pengambilan data'],
+                    'Menawarkan Barang/Jasa' => ['icon' => '🤝', 'warna' => 'warna-oranye', 'sub' => 'Kerja sama barang/jasa'],
+                    'Layanan Kearsipan' => ['icon' => '🗄️', 'warna' => 'warna-ungu', 'sub' => 'Akses dan pengelolaan arsip'],
+                ];
+            @endphp
+
+            @foreach ($daftarJenis as $jenis)
+                @php
+                    $meta = $ikonKategori[$jenis->nama] ?? ['icon' => '📌', 'warna' => 'warna-abu', 'sub' => ''];
+                @endphp
+                <button class="kartu-kategori {{ $meta['warna'] }}" onclick="pilihKategori('{{ $jenis->nama }}')">
+                    <div class="icon-lingkaran">{{ $meta['icon'] }}</div>
+                    <div class="label">{{ $jenis->nama }}</div>
+                    <div class="sub-label">{{ $meta['sub'] }}</div>
+                </button>
+            @endforeach
         </div>
 
         <p class="footer-note">Butuh bantuan? Silakan hubungi petugas di ruang sekretariat</p>

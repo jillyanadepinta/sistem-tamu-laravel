@@ -6,29 +6,35 @@
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 </head>
 <body>
-    <div class="login-page">
-        <div class="login-card">
-            <div class="login-icon">📘</div>
-            <h2>Login Admin</h2>
-            <p>Sistem Informasi Tamu Layanan</p>
+    <div class="login-page-split">
+        <div class="login-split-card">
+            <div class="login-split-left">
+                <img src="{{ asset('assets/logo-malang.png') }}" alt="Logo Kota Malang" class="login-split-logo">
+                <h2>TANPAMU</h2>
+                <p>Sistem Informasi Tamu Layanan</p>
+                <div class="login-split-sub">Dinas Perpustakaan Umum dan Arsip Daerah Kota Malang</div>
+            </div>
 
-            @if (session('error'))
-                <div class="msg-error">{{ session('error') }}</div>
-            @endif
+            <div class="login-split-right">
+                <h3>Masuk ke Akun Admin</h3>
+                <p class="login-split-desc">Silakan masuk untuk mengelola data kunjungan tamu.</p>
 
-            <form action="{{ url('/admin/login') }}" method="POST">
-                @csrf
-                <label>Username</label>
-                <input type="text" name="username" placeholder="Masukkan username" required>
+                @if (session('error'))
+                    <div class="msg-error">{{ session('error') }}</div>
+                @endif
 
-                <label>Password</label>
-                <input type="password" name="password" placeholder="Masukkan password" required>
+                <form action="{{ url('/admin/login') }}" method="POST">
+                    @csrf
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Masukkan username" required>
 
-                <button type="submit">Masuk</button>
-            </form>
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Masukkan password" required>
+
+                    <button type="submit">Masuk</button>
+                </form>
+            </div>
         </div>
-
-        <p class="login-footer">Dinas Perpustakaan Umum dan Arsip Daerah Kota Malang</p>
     </div>
 </body>
 </html>

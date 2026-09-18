@@ -57,7 +57,7 @@ class AdminController extends Controller
             });
         }
 
-        $daftarTamu = $query->orderByDesc('tanggal')->orderByDesc('jam')->get();
+        $daftarTamu = $query->orderByDesc('tanggal')->orderByDesc('jam')->paginate(10)->withQueryString();
 
         return view('admin.daftar-tamu', compact('daftarTamu', 'keyword'));
     }

@@ -29,13 +29,8 @@
                 <div class="form-grid">
                     <div>
                         <label>Jenis Kunjungan *</label>
-                        <select name="jenis_kunjungan" id="jenis_kunjungan" required>
-                            <option value="Magang">Magang</option>
-                            <option value="Donasi Buku">Donasi Buku</option>
-                            <option value="Tamu Dinas">Tamu Dinas</option>
-                            <option value="Kerja Sama">Kerja Sama</option>
-                            <option value="Lainnya">Keperluan Lainnya</option>
-                        </select>
+                        <div id="jenisKunjunganTampil" class="readonly-box">-</div>
+                        <input type="hidden" name="jenis_kunjungan" id="jenis_kunjungan">
                     </div>
                     <div>
                         <label>Nama Lengkap *</label>
@@ -86,6 +81,7 @@
 
     <script>
         const jenisKunjungan = document.getElementById('jenis_kunjungan');
+        const jenisKunjunganTampil = document.getElementById('jenisKunjunganTampil');
         const areaJenisLainnya = document.getElementById('areaJenisLainnya');
         const jenisLainnya = document.getElementById('jenis_lainnya');
         const nama = document.getElementById('nama');
@@ -109,13 +105,23 @@
                 jenisLainnya.required = false;
             }
         }
-        jenisKunjungan.addEventListener('change', toggleJenisLainnya);
-
         window.addEventListener('DOMContentLoaded', () => {
             const jenisTersimpan = sessionStorage.getItem('jenis_kunjungan');
-            if (jenisTersimpan) {
-                jenisKunjungan.value = jenisTersimpan;
+            if (!jenisTersimpan) {
+                // Belum memilih jenis kunjungan di halaman awal
+                window.location.href = "{{ url('/') }}";
+                return;
             }
+
+            const labelJenis = {
+                'Magang': 'Magang',
+                'Donasi Buku': 'Donasi Buku',
+                'Tamu Dinas': 'Tamu Dinas',
+                'Kerja Sama': 'Kerja Sama',
+                'Lainnya': 'Keperluan Lainnya',
+            };
+            jenisKunjungan.value = jenisTersimpan;
+            jenisKunjunganTampil.textContent = labelJenis[jenisTersimpan] || jenisTersimpan;
             toggleJenisLainnya();
 
             nama.value = sessionStorage.getItem('nama') || '';

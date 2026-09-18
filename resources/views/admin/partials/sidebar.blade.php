@@ -1,6 +1,8 @@
 <div class="sidebar">
-    <div class="sidebar-brand">📘 BUKU TAMU DIGITAL</div>
-
+    <div class="sidebar-brand">
+        <img src="{{ asset('assets/logo-malang.png') }}" alt="Logo Kota Malang" class="sidebar-logo-img">
+        TANPAMU
+    </div>
     <div class="sidebar-menu">
         <a href="{{ url('/admin/dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
             📊 Dashboard
@@ -11,8 +13,11 @@
         <a href="{{ url('/admin/master-kunjungan') }}" class="{{ request()->is('admin/master-kunjungan') ? 'active' : '' }}">
             🗂️ Master Kunjungan
         </a>
-        <span class="disabled">📈 Laporan <em>Segera</em></span>
-        <span class="disabled">⚙️ Pengaturan <em>Segera</em></span>
+        <a href="{{ url('/admin/laporan') }}" class="{{ request()->is('admin/laporan') ? 'active' : '' }}">
+            📈 Laporan</a>
+        <a href="{{ url('/admin/pengaturan') }}" class="{{ request()->is('admin/pengaturan') ? 'active' : '' }}">
+            ⚙️ Pengaturan
+        </a>
     </div>
 
     <div class="sidebar-footer">

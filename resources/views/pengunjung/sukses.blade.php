@@ -14,10 +14,6 @@
 
             <a href="#" class="btn btn-sukses" onclick="return false;">✅ SILAHKAN MASUK</a>
 
-            <div class="antrean-box">Nomor Antrean: #{{ str_pad($antrean, 3, '0', STR_PAD_LEFT) }}</div>
-
-            <p>Ruangan sekretariat sedang kosong. Anda dapat langsung menuju ruang sekretariat.</p>
-
             <a href="{{ url('/') }}" class="btn btn-secondary">🔄 Kembali ke Halaman Utama</a>
         </div>
     </div>
